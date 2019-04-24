@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>   Qamar 3d</title>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/three.js/99/three.min.js"></script>
+<script src="https://cdn.rawgit.com/mrdoob/three.js/master/examples/js/controls/OrbitControls.js"></script>
+<style type="text/css">
+
+body { margin: 0; }
+canvas { display: table;}
+</style>
+</head>
+<body>
+ <p><a href="https://google.com">
+                  <style>
+                    #F {
+                      text-align: center;
+                      color: white;
+                      background-color: green;
+                      padding: 30px;
+                    }
+                  </style><button id="F"><big>Exit</big></button></h1></a></p>
+            </center>
+<center><h1 style="text-shadow: 0 0 20px red;" class="display-3 bold animated fadeInRight">allah</h1></center>
+
+<script>
+var renderer, scene, camera, controls;
+var moon;
+init();
+async function init() {
+    renderer = new THREE.WebGLRenderer();
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    document.body.appendChild( renderer.domElement );
+    scene = new THREE.Scene();
+    camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 0.1, 100 );
+    camera.position.set( 10, 10, 10 );
+    controls = new THREE.OrbitControls( camera );
+    scene.add( new THREE.AxesHelper( 20 ) );
+    var moonGeometry = new THREE.SphereGeometry( 3, 64, 64 );
+    var moonMaterial = new THREE.MeshBasicMaterial();
+    await loadTexture("https://raw.githubusercontent.com/CoryG89/MoonDemo/master/img/maps/moon.jpg")
+      .then(texture => {
+        moonMaterial.map = texture;
+      }).catch(alert);
+    moon = new THREE.Mesh( moonGeometry, moonMaterial );
+    moon.add( new THREE.AxesHelper( 2.5 ) );
+    scene.add(moon)
+    animate();
+}
+function loadTexture(url) { 
+  return new Promise((resolve, reject)=> {
+    let loader = new THREE.TextureLoader();;
+    loader.load(url, resolve, undefined, reject);
+  });
+}
+function animate() {
+    requestAnimationFrame( animate );
+    controls.update();
+    renderer.render( scene, camera );
+}
+
+</script>
+</body>
+</html>
